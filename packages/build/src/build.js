@@ -80,7 +80,7 @@ await writeJson(join(dist, 'package.json'), packageJson)
 
 await mkdir(join(dist, 'bin'))
 await writeFile(
-  join(dist, 'bin', 'fileSystemProcess.js'),
+  join(dist, 'bin', 'oauthProcess.js'),
   `#!/usr/bin/env node
 
 import '../dist/index.js'
