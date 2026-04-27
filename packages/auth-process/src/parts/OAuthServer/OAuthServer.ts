@@ -1,41 +1,44 @@
-import { createServer } from 'node:http'
+import { createServer, type IncomingMessage, type Server, type ServerResponse } from 'node:http'
 import * as Assert from '../Assert/Assert.ts'
 
-/** @type {Record<string, {
-  server: import('node:http').Server | undefined,
-  portPromise: Promise<number> | undefined,
-  successHtml: string,
-  errorHtml: string,
-  codeQueue: string[],
-  codePromise: Promise<string> | undefined,
-  resolveCode: ((value: string) => void) | undefined,
-  rejectCode: ((reason?: unknown) => void) | undefined,
-}>} */
-const states = Object.create(null)
+type Resolve<T> = (value: T | PromiseLike<T>) => void
 
-const getOrCreateState = (id: string) => {
+interface OAuthServerState {
+  codePromise: Promise<string> | undefined
+  codeQueue: string[]
+  errorHtml: string
+  portPromise: Promise<number> | undefined
+  rejectCode: ((reason?: unknown) => void) | undefined
+  resolveCode: Resolve<string> | undefined
+  server: Server | undefined
+  successHtml: string
+}
+
+const states: Record<string, OAuthServerState> = Object.create(null)
+
+const getOrCreateState = (id: string): OAuthServerState => {
   if (!states[id]) {
     states[id] = {
-      server: undefined,
-      portPromise: undefined,
-      successHtml: '',
-      errorHtml: '',
-      codeQueue: [],
       codePromise: undefined,
-      resolveCode: undefined,
+      codeQueue: [],
+      errorHtml: '',
+      portPromise: undefined,
       rejectCode: undefined,
+      resolveCode: undefined,
+      server: undefined,
+      successHtml: '',
     }
   }
   return states[id]
 }
 
-const clearPendingCodePromise = (state) => {
+const clearPendingCodePromise = (state: OAuthServerState): void => {
   state.codePromise = undefined
   state.resolveCode = undefined
   state.rejectCode = undefined
 }
 
-const resolveCode = (state, code) => {
+const resolveCode = (state: OAuthServerState, code: string): void => {
   if (state.resolveCode) {
     const { resolveCode } = state
     clearPendingCodePromise(state)
@@ -45,7 +48,7 @@ const resolveCode = (state, code) => {
   state.codeQueue.push(code)
 }
 
-const rejectPendingCode = (state, error) => {
+const rejectPendingCode = (state: OAuthServerState, error: unknown): void => {
   if (!state.rejectCode) {
     return
   }
@@ -54,7 +57,7 @@ const rejectPendingCode = (state, error) => {
   rejectCode(error)
 }
 
-const getCodeFromRequest = (request) => {
+const getCodeFromRequest = (request: IncomingMessage): string | undefined => {
   if (!request.url) {
     return undefined
   }
@@ -63,7 +66,7 @@ const getCodeFromRequest = (request) => {
   return code || undefined
 }
 
-const handleRequest = (id, request, response) => {
+const handleRequest = (id: string, request: IncomingMessage, response: ServerResponse): void => {
   const state = states[id]
   let html = ''
   if (state) {
@@ -76,21 +79,21 @@ const handleRequest = (id, request, response) => {
     }
   }
   response.writeHead(200, {
-    'Content-Type': 'text/html; charset=utf-8',
     'Cache-Control': 'no-store',
+    'Content-Type': 'text/html; charset=utf-8',
   })
   response.end(html)
 }
 
-const listen = (server) => {
-  const { promise, resolve, reject } = Promise.withResolvers()
+const listen = (server: Server): Promise<number> => {
+  const { promise, reject, resolve } = Promise.withResolvers<number>()
 
-  const onError = (error) => {
+  const onError = (error: Error): void => {
     server.off('listening', onListening)
     reject(error)
   }
 
-  const onListening = () => {
+  const onListening = (): void => {
     server.off('error', onError)
     const address = server.address()
     if (!address || typeof address === 'string') {
@@ -106,9 +109,9 @@ const listen = (server) => {
   return promise
 }
 
-const getOrCreateCodePromise = (state) => {
+const getOrCreateCodePromise = (state: OAuthServerState): Promise<string> => {
   if (!state.codePromise) {
-    const { promise, resolve, reject } = Promise.withResolvers()
+    const { promise, reject, resolve } = Promise.withResolvers<string>()
     state.codePromise = promise
     state.resolveCode = resolve
     state.rejectCode = reject
@@ -116,7 +119,7 @@ const getOrCreateCodePromise = (state) => {
   return state.codePromise
 }
 
-export const create = async (id, successHtml, errorHtml) => {
+export const create = async (id: string, successHtml: string, errorHtml: string): Promise<number> => {
   Assert.string(id)
   Assert.string(successHtml)
   Assert.string(errorHtml)
@@ -141,19 +144,23 @@ export const create = async (id, successHtml, errorHtml) => {
   }
 }
 
-export const getCode = async (id) => {
+export const getCode = async (id: string): Promise<string> => {
   Assert.string(id)
   const state = states[id]
   if (!state || !state.server) {
     throw new Error(`oauth server ${id} not found`)
   }
   if (state.codeQueue.length > 0) {
-    return state.codeQueue.shift()
+    const code = state.codeQueue.shift()
+    if (code === undefined) {
+      throw new Error('expected oauth code to be queued')
+    }
+    return code
   }
   return getOrCreateCodePromise(state)
 }
 
-export const dispose = async (id) => {
+export const dispose = async (id: string): Promise<void> => {
   Assert.string(id)
   const state = getOrCreateState(id)
   if (!state.server) {
@@ -165,8 +172,8 @@ export const dispose = async (id) => {
   state.portPromise = undefined
   state.codeQueue = []
   rejectPendingCode(state, new Error('oauth server disposed'))
-  const { promise, resolve, reject } = Promise.withResolvers()
-  server.close((error) => {
+  const { promise, reject, resolve } = Promise.withResolvers<void>()
+  server.close((error?: Error) => {
     if (error) {
       reject(error)
       return
