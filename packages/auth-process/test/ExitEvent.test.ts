@@ -1,5 +1,5 @@
 import { test, expect } from '@jest/globals'
-import type { ExitEvent } from '../src/parts/ExitEvent/ExitEvent.js'
+import type { ExitEvent } from '../src/parts/ExitEvent/ExitEvent.ts'
 
 test('ExitEvent interface has correct structure', () => {
   const exitEvent: ExitEvent = {

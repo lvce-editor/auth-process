@@ -1,5 +1,5 @@
 import { test, expect } from '@jest/globals'
-import * as GetTrashFn from '../src/parts/GetTrashFn/GetTrashFn.js'
+import * as GetTrashFn from '../src/parts/GetTrashFn/GetTrashFn.ts'
 
 test('getTrashFn returns function for electron', () => {
   const result = GetTrashFn.getTrashFn(true)

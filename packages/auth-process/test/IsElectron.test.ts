@@ -1,5 +1,5 @@
 import { test, expect } from '@jest/globals'
-import * as IsElectron from '../src/parts/IsElectron/IsElectron.js'
+import * as IsElectron from '../src/parts/IsElectron/IsElectron.ts'
 
 test('isElectron returns boolean', () => {
   const result = IsElectron.isElectron

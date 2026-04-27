@@ -1,5 +1,5 @@
 import { test, expect } from '@jest/globals'
-import * as HandleIpc from '../src/parts/HandleIpc/HandleIpc.js'
+import * as HandleIpc from '../src/parts/HandleIpc/HandleIpc.ts'
 
 test('handleIpc is a function', () => {
   expect(typeof HandleIpc.handleIpc).toBe('function')

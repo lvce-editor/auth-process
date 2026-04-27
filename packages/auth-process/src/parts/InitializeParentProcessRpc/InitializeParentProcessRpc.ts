@@ -19,7 +19,7 @@ const getRpc = (argv: readonly string[]): Promise<Rpc> => {
       commandMap: CommandMap.commandMap,
     })
   }
-  throw new Error(`[file-system-process] unknown ipc type`)
+  throw new Error(`[auth-process] unknown ipc type`)
 }
 
 export const initializeParentProcessRpc = async (argv: readonly string[]): Promise<void> => {

@@ -1,5 +1,5 @@
 import { test, expect } from '@jest/globals'
-import * as HandleWebSocket from '../src/parts/HandleWebSocket/HandleWebSocket.js'
+import * as HandleWebSocket from '../src/parts/HandleWebSocket/HandleWebSocket.ts'
 
 test('handleWebSocket is a function', () => {
   expect(typeof HandleWebSocket.handleWebSocket).toBe('function')

@@ -1,5 +1,5 @@
 {
-  "name": "@lvce-editor/file-system-process",
+  "name": "@lvce-editor/auth-process",
   "version": "0.0.0-dev",
   "description": "File System Process",
   "keywords": [
@@ -8,14 +8,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lvce-editor/file-system-process.git"
+    "url": "git+https://github.com/lvce-editor/auth-process.git"
   },
   "license": "MIT",
   "author": "Lvce Editor",
   "type": "module",
   "main": "src/fileSystemProcessMain.ts",
   "bin": {
-    "file-system-process": "bin/fileSystemProcess.js"
+    "auth-process": "bin/fileSystemProcess.js"
   },
   "scripts": {
     "test": "node --unhandled-rejections=warn --experimental-vm-modules ./node_modules/jest/bin/jest.js --detectOpenHandles --forceExit",

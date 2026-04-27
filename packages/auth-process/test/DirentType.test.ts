@@ -1,5 +1,5 @@
 import { test, expect } from '@jest/globals'
-import * as DirentType from '../src/parts/DirentType/DirentType.js'
+import * as DirentType from '../src/parts/DirentType/DirentType.ts'
 
 test('DirentType constants have correct values', () => {
   expect(DirentType.BlockDevice).toBe(1)

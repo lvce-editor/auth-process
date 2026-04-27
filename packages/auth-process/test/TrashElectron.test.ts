@@ -1,5 +1,5 @@
 import { test, expect } from '@jest/globals'
-import * as TrashElectron from '../src/parts/TrashElectron/TrashElectron.js'
+import * as TrashElectron from '../src/parts/TrashElectron/TrashElectron.ts'
 
 test('trash is a function', () => {
   expect(typeof TrashElectron.trash).toBe('function')

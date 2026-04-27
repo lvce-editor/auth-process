@@ -55,7 +55,7 @@ jest.unstable_mockModule('../src/parts/GetFolderSizeInternal/GetFolderSizeIntern
 }))
 
 test('getPathSeparator should return forward slash', async (): Promise<void> => {
-  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.js')
+  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.ts')
   const result = FileSystemDisk.getPathSeparator()
   expect(result).toBe('/')
 })
@@ -66,7 +66,7 @@ test('copy should copy files successfully', async (): Promise<void> => {
   // @ts-ignore
   mockFileURLToPath.mockImplementation((url: string): string => url.replace('file://', ''))
 
-  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.js')
+  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.ts')
 
   await FileSystemDisk.copy('file:///source', 'file:///target')
 
@@ -76,12 +76,12 @@ test('copy should copy files successfully', async (): Promise<void> => {
 })
 
 test('copy should throw error for invalid source URI', async (): Promise<void> => {
-  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.js')
+  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.ts')
   await expect(FileSystemDisk.copy('invalid://source', 'file:///target')).rejects.toThrow('path must be a valid file uri')
 })
 
 test('copy should throw error for invalid target URI', async (): Promise<void> => {
-  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.js')
+  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.ts')
   await expect(FileSystemDisk.copy('file:///source', 'invalid://target')).rejects.toThrow('path must be a valid file uri')
 })
 
@@ -92,7 +92,7 @@ test('copy should handle same source and dest error', async (): Promise<void> =>
   // @ts-ignore
   mockFileURLToPath.mockImplementation((url: string): string => url.replace('file://', ''))
 
-  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.js')
+  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.ts')
   await expect(FileSystemDisk.copy('file:///same', 'file:///same')).rejects.toThrow(
     'Failed to copy "file:///same" to "file:///same": src and dest cannot be the same',
   )
@@ -105,7 +105,7 @@ test('readFile should read file successfully', async (): Promise<void> => {
   // @ts-ignore
   mockFileURLToPath.mockImplementation((url: string): string => url.replace('file://', ''))
 
-  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.js')
+  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.ts')
   const result = await FileSystemDisk.readFile('file:///test.txt')
 
   expect(mockFileURLToPath).toHaveBeenCalledWith('file:///test.txt')
@@ -120,7 +120,7 @@ test('readFile should read file with custom encoding', async (): Promise<void> =
   // @ts-ignore
   mockFileURLToPath.mockImplementation((url: string): string => url.replace('file://', ''))
 
-  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.js')
+  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.ts')
   await FileSystemDisk.readFile('file:///test.bin', 'binary')
 
   expect(mockReadFile).toHaveBeenCalledWith('/test.bin', 'binary')
@@ -134,7 +134,7 @@ test('readFile should throw FileNotFoundError for missing file', async (): Promi
   // @ts-ignore
   mockFileURLToPath.mockImplementation((url: string): string => url.replace('file://', ''))
 
-  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.js')
+  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.ts')
   await expect(FileSystemDisk.readFile('file:///missing.txt')).rejects.toThrow('File not found')
 })
 
@@ -144,7 +144,7 @@ test('writeFile should write file successfully', async (): Promise<void> => {
   // @ts-ignore
   mockFileURLToPath.mockImplementation((url: string): string => url.replace('file://', ''))
 
-  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.js')
+  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.ts')
   await FileSystemDisk.writeFile('file:///test.txt', 'content')
 
   expect(mockFileURLToPath).toHaveBeenCalledWith('file:///test.txt')
@@ -157,7 +157,7 @@ test('writeFile should write file with custom encoding', async (): Promise<void>
   // @ts-ignore
   mockFileURLToPath.mockImplementation((url: string): string => url.replace('file://', ''))
 
-  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.js')
+  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.ts')
   await FileSystemDisk.writeFile('file:///test.txt', 'content', 'binary')
 
   expect(mockWriteFile).toHaveBeenCalledWith('/test.txt', 'content', 'binary')
@@ -170,7 +170,7 @@ test('remove should remove file successfully', async (): Promise<void> => {
   // @ts-ignore
   mockFileURLToPath.mockImplementation((url: string): string => url.replace('file://', ''))
 
-  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.js')
+  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.ts')
   await FileSystemDisk.remove('file:///test.txt')
 
   expect(mockFileURLToPath).toHaveBeenCalledWith('file:///test.txt')
@@ -183,7 +183,7 @@ test('remove should not remove root directory', async (): Promise<void> => {
   // @ts-ignore
   mockFileURLToPath.mockImplementation((url: string): string => url.replace('file://', ''))
 
-  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.js')
+  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.ts')
   await FileSystemDisk.remove('file:///')
 
   expect(consoleSpy).toHaveBeenCalledWith('not removing path')
@@ -197,7 +197,7 @@ test('remove should not remove home directory', async (): Promise<void> => {
   // @ts-ignore
   mockFileURLToPath.mockImplementation((url: string): string => url.replace('file://', ''))
 
-  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.js')
+  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.ts')
   await FileSystemDisk.remove('file:///home/user')
 
   expect(consoleSpy).toHaveBeenCalledWith('not removing path')
@@ -212,7 +212,7 @@ test('remove should throw VError when trash fails', async (): Promise<void> => {
   // @ts-ignore
   mockFileURLToPath.mockImplementation((url: string): string => url.replace('file://', ''))
 
-  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.js')
+  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.ts')
   await expect(FileSystemDisk.remove('file:///test.txt')).rejects.toThrow('Failed to remove "file:///test.txt"')
 })
 
@@ -247,7 +247,7 @@ test('readDirWithFileTypes should read directory successfully', async (): Promis
   // @ts-ignore
   mockFileURLToPath.mockImplementation((url: string): string => url.replace('file://', ''))
 
-  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.js')
+  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.ts')
   const result = await FileSystemDisk.readDirWithFileTypes('file:///test')
 
   expect(mockFileURLToPath).toHaveBeenCalledWith('file:///test')
@@ -264,7 +264,7 @@ test('readDirWithFileTypes should throw VError when directory read fails', async
   // @ts-ignore
   mockFileURLToPath.mockImplementation((url: string): string => url.replace('file://', ''))
 
-  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.js')
+  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.ts')
   await expect(FileSystemDisk.readDirWithFileTypes('file:///test')).rejects.toThrow('Failed to read directory "file:///test"')
 })
 
@@ -274,7 +274,7 @@ test('mkdir should create directory successfully', async (): Promise<void> => {
   // @ts-ignore
   mockFileURLToPath.mockImplementation((url: string): string => url.replace('file://', ''))
 
-  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.js')
+  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.ts')
   await FileSystemDisk.mkdir('file:///newdir')
 
   expect(mockFileURLToPath).toHaveBeenCalledWith('file:///newdir')
@@ -288,7 +288,7 @@ test('mkdir should throw VError when directory creation fails', async (): Promis
   // @ts-ignore
   mockFileURLToPath.mockImplementation((url: string): string => url.replace('file://', ''))
 
-  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.js')
+  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.ts')
   await expect(FileSystemDisk.mkdir('file:///newdir')).rejects.toThrow('Failed to create directory "file:///newdir"')
 })
 
@@ -298,7 +298,7 @@ test('rename should rename file successfully', async (): Promise<void> => {
   // @ts-ignore
   mockFileURLToPath.mockImplementation((url: string): string => url.replace('file://', ''))
 
-  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.js')
+  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.ts')
   await FileSystemDisk.rename('file:///old.txt', 'file:///new.txt')
 
   expect(mockFileURLToPath).toHaveBeenCalledWith('file:///old.txt')
@@ -317,7 +317,7 @@ test('rename should use fallback rename for EXDEV error', async (): Promise<void
   // @ts-ignore
   mockFileURLToPath.mockImplementation((url: string): string => url.replace('file://', ''))
 
-  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.js')
+  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.ts')
   await FileSystemDisk.rename('file:///old.txt', 'file:///new.txt')
 
   expect(mockCp).toHaveBeenCalledWith('/old.txt', '/new.txt', { recursive: true })
@@ -331,7 +331,7 @@ test('rename should throw VError for other rename errors', async (): Promise<voi
   // @ts-ignore
   mockFileURLToPath.mockImplementation((url: string): string => url.replace('file://', ''))
 
-  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.js')
+  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.ts')
   await expect(FileSystemDisk.rename('file:///old.txt', 'file:///new.txt')).rejects.toThrow(
     'Failed to rename "file:///old.txt" to "file:///new.txt"',
   )
@@ -353,7 +353,7 @@ test('stat should get file stats successfully', async (): Promise<void> => {
   // @ts-ignore
   mockFileURLToPath.mockImplementation((url: string): string => url.replace('file://', ''))
 
-  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.js')
+  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.ts')
   const result = await FileSystemDisk.stat('file:///test.txt')
 
   expect(mockFileURLToPath).toHaveBeenCalledWith('file:///test.txt')
@@ -367,7 +367,7 @@ test('chmod should change file permissions successfully', async (): Promise<void
   // @ts-ignore
   mockFileURLToPath.mockImplementation((url: string): string => url.replace('file://', ''))
 
-  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.js')
+  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.ts')
   await FileSystemDisk.chmod('file:///test.txt', 0o644)
 
   expect(mockFileURLToPath).toHaveBeenCalledWith('file:///test.txt')
@@ -381,7 +381,7 @@ test('readJson should read JSON file successfully', async (): Promise<void> => {
   // @ts-ignore
   mockFileURLToPath.mockImplementation((url: string): string => url.replace('file://', ''))
 
-  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.js')
+  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.ts')
   const result = await FileSystemDisk.readJson('file:///test.json')
 
   expect(mockFileURLToPath).toHaveBeenCalledWith('file:///test.json')
@@ -397,7 +397,7 @@ test('readJson should throw FileNotFoundError for missing JSON file', async (): 
   // @ts-ignore
   mockFileURLToPath.mockImplementation((url: string): string => url.replace('file://', ''))
 
-  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.js')
+  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.ts')
   await expect(FileSystemDisk.readJson('file:///missing.json')).rejects.toThrow('File not found')
 })
 
@@ -409,7 +409,7 @@ test('readJson should throw VError for invalid JSON', async (): Promise<void> =>
   // @ts-ignore
   mockFileURLToPath.mockImplementation((url: string): string => url.replace('file://', ''))
 
-  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.js')
+  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.ts')
   await expect(FileSystemDisk.readJson('file:///invalid.json')).rejects.toThrow('Failed to read file as json')
 })
 
@@ -419,7 +419,7 @@ test('getFolderSize should get folder size successfully', async (): Promise<void
   // @ts-ignore
   mockFileURLToPath.mockImplementation((url: string): string => url.replace('file://', ''))
 
-  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.js')
+  const FileSystemDisk = await import('../src/parts/FileSystemDisk/FileSystemDisk.ts')
   const result = await FileSystemDisk.getFolderSize('file:///testdir')
 
   expect(mockFileURLToPath).toHaveBeenCalledWith('file:///testdir')

@@ -1,5 +1,5 @@
 import { test, expect } from '@jest/globals'
-import * as HandleElectronMessagePort from '../src/parts/HandleElectronMessagePort/HandleElectronMessagePort.js'
+import * as HandleElectronMessagePort from '../src/parts/HandleElectronMessagePort/HandleElectronMessagePort.ts'
 
 test('handleElectronMessagePort is a function', () => {
   expect(typeof HandleElectronMessagePort.handleElectronMessagePort).toBe('function')

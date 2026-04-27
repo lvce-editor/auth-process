@@ -1,5 +1,5 @@
 import { test, expect } from '@jest/globals'
-import * as IsEnoentErrorWindows from '../src/parts/IsEnoentErrorWindows/IsEnoentErrorWindows.js'
+import * as IsEnoentErrorWindows from '../src/parts/IsEnoentErrorWindows/IsEnoentErrorWindows.ts'
 
 test('isEnoentErrorWindows returns true for Windows path error', () => {
   const error = { message: 'The system cannot find the path specified.' }

@@ -1,17 +1,17 @@
 {
-  "name": "@lvce-editor/file-system-process-monorepo",
+  "name": "@lvce-editor/auth-process-monorepo",
   "version": "0.0.0-dev",
   "description": "File System Process Monorepo",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lvce-editor/file-system-process.git"
+    "url": "https://github.com/lvce-editor/auth-process.git"
   },
   "license": "MIT",
   "author": "Lvce Editor",
   "type": "module",
   "scripts": {
     "build": "node packages/build/src/build.js",
-    "build:watch": "./packages/build/node_modules/.bin/esbuild --format=esm --platform=node --bundle --external:electron --external:trash --external:ws --watch packages/file-system-process/src/fileSystemProcessMain.ts --outfile=packages/file-system-process/dist/index.js",
+    "build:watch": "./packages/build/node_modules/.bin/esbuild --format=esm --platform=node --bundle --external:electron --external:trash --external:ws --watch packages/auth-process/src/fileSystemProcessMain.ts --outfile=packages/auth-process/dist/index.js",
     "dev": "node packages/build/src/dev.js",
     "format": "prettier --write .",
     "postinstall": "lerna bootstrap --ci",

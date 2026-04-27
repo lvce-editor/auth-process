@@ -1,5 +1,5 @@
 import { test, expect } from '@jest/globals'
-import * as GetFolderSizeInternal from '../src/parts/GetFolderSizeInternal/GetFolderSizeInternal.js'
+import * as GetFolderSizeInternal from '../src/parts/GetFolderSizeInternal/GetFolderSizeInternal.ts'
 
 test('getFolderSizeInternal throws error for root path', async () => {
   await expect(GetFolderSizeInternal.getFolderSizeInternal('/')).rejects.toThrow('Invalid path for folder size')

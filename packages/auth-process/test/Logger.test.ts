@@ -1,5 +1,5 @@
 import { test, expect } from '@jest/globals'
-import * as Logger from '../src/parts/Logger/Logger.js'
+import * as Logger from '../src/parts/Logger/Logger.ts'
 
 test('info is a function', () => {
   expect(typeof Logger.info).toBe('function')

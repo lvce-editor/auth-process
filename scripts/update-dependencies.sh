@@ -29,7 +29,7 @@ function updateDependencies {
                                                        updateDependencies             &&
 cd packages/e2e                                     && updateDependencies && cd ../.. &&
 cd packages/build                                   && updateDependencies && cd ../.. &&
-cd packages/file-system-process                     && updateDependencies && cd ../.. &&
+cd packages/auth-process                     && updateDependencies && cd ../.. &&
 cd packages/memory                                  && updateDependencies && cd ../.. &&
 cd packages/server                                  && updateDependencies && cd ../.. &&
 

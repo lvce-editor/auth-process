@@ -1,6 +1,6 @@
 import { test, expect } from '@jest/globals'
-import * as DirentType from '../src/parts/DirentType/DirentType.js'
-import * as GetDirentType from '../src/parts/GetDirentType/GetDirentType.js'
+import * as DirentType from '../src/parts/DirentType/DirentType.ts'
+import * as GetDirentType from '../src/parts/GetDirentType/GetDirentType.ts'
 
 test('getDirentType returns correct type for file', (): void => {
   const mockDirent = {

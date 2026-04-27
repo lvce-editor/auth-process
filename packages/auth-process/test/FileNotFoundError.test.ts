@@ -1,6 +1,6 @@
 import { test, expect } from '@jest/globals'
-import * as ErrorCodes from '../src/parts/ErrorCodes/ErrorCodes.js'
-import { FileNotFoundError } from '../src/parts/FileNotFoundError/FileNotFoundError.js'
+import * as ErrorCodes from '../src/parts/ErrorCodes/ErrorCodes.ts'
+import { FileNotFoundError } from '../src/parts/FileNotFoundError/FileNotFoundError.ts'
 
 test('FileNotFoundError extends VError', () => {
   const error = new FileNotFoundError('/test/path')

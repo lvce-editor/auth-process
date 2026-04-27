@@ -9,7 +9,7 @@
       "path": "./packages/build"
     },
     {
-      "path": "./packages/file-system-process"
+      "path": "./packages/auth-process"
     },
     {
       "path": "./packages/memory"
