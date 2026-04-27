@@ -1,7 +1,7 @@
 {
   "name": "@lvce-editor/auth-process-monorepo",
   "version": "0.0.0-dev",
-  "description": "File System Process Monorepo",
+  "description": "Auth Process Monorepo",
   "repository": {
     "type": "git",
     "url": "https://github.com/lvce-editor/auth-process.git"
