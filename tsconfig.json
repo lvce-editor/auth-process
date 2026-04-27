@@ -1,0 +1,21 @@
+{
+  "files": [],
+  "include": [],
+  "references": [
+    {
+      "path": "./packages/e2e"
+    },
+    {
+      "path": "./packages/build"
+    },
+    {
+      "path": "./packages/auth-process"
+    },
+    {
+      "path": "./packages/memory"
+    },
+    {
+      "path": "./packages/server"
+    }
+  ]
+}
