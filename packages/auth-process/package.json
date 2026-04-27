@@ -1,10 +1,10 @@
 {
   "name": "@lvce-editor/auth-process",
   "version": "0.0.0-dev",
-  "description": "File System Process",
+  "description": "Auth Process",
   "keywords": [
     "Lvce Editor",
-    "File System"
+    "Auth"
   ],
   "repository": {
     "type": "git",
