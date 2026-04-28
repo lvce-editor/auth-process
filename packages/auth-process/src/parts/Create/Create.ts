@@ -3,7 +3,7 @@ import * as Assert from '../Assert/Assert.ts'
 import { getOrCreateState } from '../GetOrCreateState/GetOrCreateState.ts'
 import { handleRequest } from '../HandleRequest/HandleRequest.ts'
 import { listen } from '../ListenServer/ListenServer.ts'
-import { states } from '../State/State.ts'
+import { remove } from '../State/State.ts'
 
 export const create = async (id: string, successHtml: string, errorHtml: string): Promise<number> => {
   Assert.string(id)
@@ -25,7 +25,7 @@ export const create = async (id: string, successHtml: string, errorHtml: string)
   } catch (error) {
     state.server = undefined
     state.portPromise = undefined
-    delete states[id]
+    remove(id)
     throw error
   }
 }
