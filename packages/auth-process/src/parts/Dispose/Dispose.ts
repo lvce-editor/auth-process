@@ -1,4 +1,4 @@
-import * as Assert from '../../Assert/Assert.ts'
+import * as Assert from '../Assert/Assert.ts'
 import { getOrCreateState } from '../GetOrCreateState/GetOrCreateState.ts'
 import { OAuthServerDisposedError } from '../OAuthServerDisposedError/OAuthServerDisposedError.ts'
 import { rejectPendingCode } from '../RejectPendingCode/RejectPendingCode.ts'

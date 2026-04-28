@@ -1,6 +1,6 @@
 import { afterEach, expect, test } from '@jest/globals'
 import * as OAuthServer from '../src/parts/OAuthServer/OAuthServer.ts'
-import { OAuthServerDisposedError } from '../src/parts/OAuthServer/OAuthServerDisposedError/OAuthServerDisposedError.ts'
+import { OAuthServerDisposedError } from '../src/parts/OAuthServerDisposedError/OAuthServerDisposedError.ts'
 
 const disposableIds: string[] = []
 
