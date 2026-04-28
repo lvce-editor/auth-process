@@ -1,3 +1,3 @@
-# Oauth Process
+# Auth Process
 
-OAuth Process
+Auth Process

@@ -13,7 +13,7 @@
   "license": "MIT",
   "author": "Lvce Editor",
   "type": "module",
-  "main": "src/oauthProcessMain.ts",
+  "main": "src/authProcessMain.ts",
   "bin": {
     "auth-process": "bin/oauthProcess.js"
   },
