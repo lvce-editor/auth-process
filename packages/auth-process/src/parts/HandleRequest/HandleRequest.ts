@@ -1,9 +1,12 @@
 import type { IncomingMessage, ServerResponse } from 'node:http'
 import { getCodeFromRequest } from '../GetCodeFromRequest/GetCodeFromRequest.ts'
 import { resolveCode } from '../ResolveCode/ResolveCode.ts'
-import { get } from '../State/State.ts'
+import { get, has } from '../State/State.ts'
 
 export const handleRequest = (id: string, request: IncomingMessage, response: ServerResponse): void => {
+  if (!has(id)) {
+    return
+  }
   const state = get(id)
   let html = ''
   if (state) {
