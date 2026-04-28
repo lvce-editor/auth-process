@@ -18,6 +18,29 @@ const request = async (port: number, path: string): Promise<string> => {
   return response.text()
 }
 
+const requestWithStatus = async (port: number, path: string): Promise<{ readonly status: number; readonly text: string }> => {
+  const response = await fetch(`http://localhost:${port}${path}`)
+  const text = await response.text()
+  return {
+    status: response.status,
+    text,
+  }
+}
+
+const getPromiseState = async (promise: Promise<unknown>): Promise<'pending' | 'resolved' | 'rejected'> => {
+  return Promise.race([
+    promise.then(
+      () => 'resolved' as const,
+      () => 'rejected' as const,
+    ),
+    new Promise<'pending'>((resolve) => {
+      setTimeout(() => {
+        resolve('pending')
+      }, 0)
+    }),
+  ])
+}
+
 afterEach(async () => {
   while (disposableIds.length > 0) {
     const id = disposableIds.pop()
@@ -58,6 +81,25 @@ test('request without oauth code returns error html', async () => {
   const html = await request(port, '/callback')
 
   expect(html).toBe('<p>error</p>')
+})
+
+test('favicon request is ignored', async () => {
+  const id = createTestId()
+  const port = await OAuthServer.create(id, '<p>success</p>', '<p>error</p>')
+  const codePromise = OAuthServer.getCode(id)
+
+  const response = await requestWithStatus(port, '/favicon.ico')
+  const promiseState = await getPromiseState(codePromise)
+  const html = await request(port, '/callback?code=abc123')
+  const code = await codePromise
+
+  expect(response).toEqual({
+    status: 404,
+    text: '',
+  })
+  expect(promiseState).toBe('pending')
+  expect(html).toBe('<p>success</p>')
+  expect(code).toBe('abc123')
 })
 
 test('dispose rejects pending getCode promise', async () => {
