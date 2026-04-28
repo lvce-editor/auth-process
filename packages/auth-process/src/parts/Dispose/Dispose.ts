@@ -2,13 +2,13 @@ import * as Assert from '../Assert/Assert.ts'
 import { getOrCreateState } from '../GetOrCreateState/GetOrCreateState.ts'
 import { OAuthServerDisposedError } from '../OAuthServerDisposedError/OAuthServerDisposedError.ts'
 import { rejectPendingCode } from '../RejectPendingCode/RejectPendingCode.ts'
-import { states } from '../State/State.ts'
+import { remove } from '../State/State.ts'
 
 export const dispose = async (id: string): Promise<void> => {
   Assert.string(id)
   const state = getOrCreateState(id)
   if (!state.server) {
-    delete states[id]
+    remove(id)
     return
   }
   const { server } = state
@@ -25,5 +25,5 @@ export const dispose = async (id: string): Promise<void> => {
     resolve(undefined)
   })
   await promise
-  delete states[id]
+  remove(id)
 }
