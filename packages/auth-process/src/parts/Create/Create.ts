@@ -3,28 +3,34 @@ import * as Assert from '../Assert/Assert.ts'
 import { getOrCreateState } from '../GetOrCreateState/GetOrCreateState.ts'
 import { handleRequest } from '../HandleRequest/HandleRequest.ts'
 import { listen } from '../ListenServer/ListenServer.ts'
-import { remove } from '../State/State.ts'
+import { remove, set } from '../State/State.ts'
 
 export const create = async (id: string, successHtml: string, errorHtml: string): Promise<number> => {
   Assert.string(id)
   Assert.string(successHtml)
   Assert.string(errorHtml)
   const state = getOrCreateState(id)
-  state.successHtml = successHtml
-  state.errorHtml = errorHtml
-  if (state.portPromise) {
-    return state.portPromise
+  const nextState = {
+    ...state,
+    errorHtml,
+    successHtml,
+  }
+  set(id, nextState)
+  if (nextState.portPromise) {
+    return nextState.portPromise
   }
   const server = createServer((request, response) => {
     handleRequest(id, request, response)
   })
-  state.server = server
-  state.portPromise = listen(server)
+  const portPromise = listen(server)
+  set(id, {
+    ...nextState,
+    portPromise,
+    server,
+  })
   try {
-    return await state.portPromise
+    return await portPromise
   } catch (error) {
-    state.server = undefined
-    state.portPromise = undefined
     remove(id)
     throw error
   }

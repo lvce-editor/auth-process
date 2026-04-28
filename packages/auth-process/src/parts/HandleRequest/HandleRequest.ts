@@ -19,7 +19,7 @@ export const handleRequest = (id: string, request: IncomingMessage, response: Se
   if (state) {
     const code = getCodeFromRequest(request)
     if (code) {
-      resolveCode(state, code)
+      resolveCode(id, state, code)
       html = state.successHtml
     } else {
       html = state.errorHtml
