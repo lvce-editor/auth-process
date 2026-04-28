@@ -4,6 +4,13 @@ import { resolveCode } from '../ResolveCode/ResolveCode.ts'
 import { get, has } from '../State/State.ts'
 
 export const handleRequest = (id: string, request: IncomingMessage, response: ServerResponse): void => {
+  if (request.url === '/favicon.ico') {
+    response.writeHead(404, {
+      'Cache-Control': 'no-store',
+    })
+    response.end()
+    return
+  }
   if (!has(id)) {
     return
   }
