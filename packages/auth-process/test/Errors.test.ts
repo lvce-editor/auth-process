@@ -1,9 +1,9 @@
 import { expect, test } from '@jest/globals'
+import { FailedToDetermineOAuthServerPortError } from '../src/parts/FailedToDetermineOAuthServerPortError/FailedToDetermineOAuthServerPortError.ts'
 import { UnknownIpcTypeError } from '../src/parts/InitializeParentProcessRpc/UnknownIpcTypeError/UnknownIpcTypeError.ts'
-import { FailedToDetermineOAuthServerPortError } from '../src/parts/OAuthServer/FailedToDetermineOAuthServerPortError/FailedToDetermineOAuthServerPortError.ts'
-import { OAuthExpectedQueuedCodeError } from '../src/parts/OAuthServer/OAuthExpectedQueuedCodeError/OAuthExpectedQueuedCodeError.ts'
-import { OAuthServerDisposedError } from '../src/parts/OAuthServer/OAuthServerDisposedError/OAuthServerDisposedError.ts'
-import { OAuthServerNotFoundError } from '../src/parts/OAuthServer/OAuthServerNotFoundError/OAuthServerNotFoundError.ts'
+import { OAuthExpectedQueuedCodeError } from '../src/parts/OAuthExpectedQueuedCodeError/OAuthExpectedQueuedCodeError.ts'
+import { OAuthServerDisposedError } from '../src/parts/OAuthServerDisposedError/OAuthServerDisposedError.ts'
+import { OAuthServerNotFoundError } from '../src/parts/OAuthServerNotFoundError/OAuthServerNotFoundError.ts'
 
 test('OAuthServerNotFoundError exposes name message and code', () => {
   const error = new OAuthServerNotFoundError('test-id')

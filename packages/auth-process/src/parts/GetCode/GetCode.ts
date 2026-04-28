@@ -1,4 +1,4 @@
-import * as Assert from '../../Assert/Assert.ts'
+import * as Assert from '../Assert/Assert.ts'
 import { getOrCreateCodePromise } from '../GetOrCreateCodePromise/GetOrCreateCodePromise.ts'
 import { OAuthExpectedQueuedCodeError } from '../OAuthExpectedQueuedCodeError/OAuthExpectedQueuedCodeError.ts'
 import { OAuthServerNotFoundError } from '../OAuthServerNotFoundError/OAuthServerNotFoundError.ts'
