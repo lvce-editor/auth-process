@@ -2,6 +2,7 @@ import type { Rpc } from '@lvce-editor/rpc'
 import { ElectronUtilityProcessRpcClient, NodeForkedProcessRpcClient, NodeWorkerRpcClient } from '@lvce-editor/rpc'
 import { SharedProcess } from '@lvce-editor/rpc-registry'
 import * as CommandMap from '../CommandMap/CommandMap.ts'
+import { UnknownIpcTypeError } from './UnknownIpcTypeError/UnknownIpcTypeError.ts'
 
 const getRpc = (argv: readonly string[]): Promise<Rpc> => {
   if (argv.includes('--ipc-type=node-worker')) {
@@ -19,7 +20,7 @@ const getRpc = (argv: readonly string[]): Promise<Rpc> => {
       commandMap: CommandMap.commandMap,
     })
   }
-  throw new Error(`[auth-process] unknown ipc type`)
+  throw new UnknownIpcTypeError()
 }
 
 export const initializeParentProcessRpc = async (argv: readonly string[]): Promise<void> => {

@@ -1,3 +1,7 @@
 export { create } from './Create/Create.ts'
 export { dispose } from './Dispose/Dispose.ts'
+export { FailedToDetermineOAuthServerPortError } from './FailedToDetermineOAuthServerPortError/FailedToDetermineOAuthServerPortError.ts'
 export { getCode } from './GetCode/GetCode.ts'
+export { OAuthExpectedQueuedCodeError } from './OAuthExpectedQueuedCodeError/OAuthExpectedQueuedCodeError.ts'
+export { OAuthServerDisposedError } from './OAuthServerDisposedError/OAuthServerDisposedError.ts'
+export { OAuthServerNotFoundError } from './OAuthServerNotFoundError/OAuthServerNotFoundError.ts'

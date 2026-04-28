@@ -1,4 +1,5 @@
 import type { Server } from 'node:http'
+import { FailedToDetermineOAuthServerPortError } from '../FailedToDetermineOAuthServerPortError/FailedToDetermineOAuthServerPortError.ts'
 
 export const listen = (server: Server): Promise<number> => {
   const { promise, reject, resolve } = Promise.withResolvers<number>()
@@ -12,7 +13,7 @@ export const listen = (server: Server): Promise<number> => {
     server.off('error', onError)
     const address = server.address()
     if (!address || typeof address === 'string') {
-      reject(new Error('failed to determine oauth server port'))
+      reject(new FailedToDetermineOAuthServerPortError())
       return
     }
     resolve(address.port)

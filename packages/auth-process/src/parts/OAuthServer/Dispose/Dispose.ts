@@ -1,5 +1,6 @@
 import * as Assert from '../../Assert/Assert.ts'
 import { getOrCreateState } from '../GetOrCreateState/GetOrCreateState.ts'
+import { OAuthServerDisposedError } from '../OAuthServerDisposedError/OAuthServerDisposedError.ts'
 import { rejectPendingCode } from '../RejectPendingCode/RejectPendingCode.ts'
 import { states } from '../State/State.ts'
 
@@ -14,7 +15,7 @@ export const dispose = async (id: string): Promise<void> => {
   state.server = undefined
   state.portPromise = undefined
   state.codeQueue = []
-  rejectPendingCode(state, new Error('oauth server disposed'))
+  rejectPendingCode(state, new OAuthServerDisposedError())
   const { promise, reject, resolve } = Promise.withResolvers<void>()
   server.close((error?: Error) => {
     if (error) {
