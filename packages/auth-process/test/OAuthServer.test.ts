@@ -1,5 +1,6 @@
 import { afterEach, expect, test } from '@jest/globals'
 import * as OAuthServer from '../src/parts/OAuthServer/OAuthServer.ts'
+import { OAuthServerDisposedError } from '../src/parts/OAuthServer/OAuthServerDisposedError/OAuthServerDisposedError.ts'
 
 const disposableIds: string[] = []
 
@@ -67,5 +68,9 @@ test('dispose rejects pending getCode promise', async () => {
   await OAuthServer.dispose(id)
   disposableIds.pop()
 
-  await expect(codePromise).rejects.toThrow('oauth server disposed')
+  await expect(codePromise).rejects.toMatchObject({
+    code: 'AUTH_PROCESS_OAUTH_SERVER_DISPOSED',
+    message: 'oauth server disposed',
+  })
+  await expect(codePromise).rejects.toBeInstanceOf(OAuthServerDisposedError)
 })
