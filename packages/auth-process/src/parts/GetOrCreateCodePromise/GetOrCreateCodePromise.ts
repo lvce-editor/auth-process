@@ -1,11 +1,16 @@
 import type { OAuthServerState } from '../OAuthServerState/OAuthServerState.ts'
+import { set } from '../State/State.ts'
 
-export const getOrCreateCodePromise = (state: OAuthServerState): Promise<string> => {
+export const getOrCreateCodePromise = (id: string, state: OAuthServerState): Promise<string> => {
   if (!state.codePromise) {
     const { promise, reject, resolve } = Promise.withResolvers<string>()
-    state.codePromise = promise
-    state.resolveCode = resolve
-    state.rejectCode = reject
+    set(id, {
+      ...state,
+      codePromise: promise,
+      rejectCode: reject,
+      resolveCode: resolve,
+    })
+    return promise
   }
   return state.codePromise
 }
