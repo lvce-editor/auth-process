@@ -4,14 +4,15 @@ import { OAuthServerDisposedError } from '../src/parts/OAuthServerDisposedError/
 
 const disposableIds: string[] = []
 
-let idCounter = 0
-
-const createTestId = (): string => {
-  idCounter += 1
-  const id = `oauth-server-${idCounter}`
-  disposableIds.push(id)
-  return id
-}
+const createTestId = (() => {
+  let idCounter = 0
+  return (): string => {
+    idCounter += 1
+    const id = `oauth-server-${idCounter}`
+    disposableIds.push(id)
+    return id
+  }
+})()
 
 const request = async (port: number, path: string): Promise<string> => {
   const response = await fetch(`http://localhost:${port}${path}`)
@@ -27,12 +28,18 @@ const requestWithStatus = async (port: number, path: string): Promise<{ readonly
   }
 }
 
+const getSettledPromiseState = async (promise: Promise<unknown>): Promise<'resolved' | 'rejected'> => {
+  try {
+    await promise
+    return 'resolved'
+  } catch {
+    return 'rejected'
+  }
+}
+
 const getPromiseState = async (promise: Promise<unknown>): Promise<'pending' | 'resolved' | 'rejected'> => {
   return Promise.race([
-    promise.then(
-      () => 'resolved' as const,
-      () => 'rejected' as const,
-    ),
+    getSettledPromiseState(promise),
     new Promise<'pending'>((resolve) => {
       setTimeout(() => {
         resolve('pending')
