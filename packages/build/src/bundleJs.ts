@@ -2,13 +2,10 @@ import pluginTypeScript from '@babel/preset-typescript'
 import { babel } from '@rollup/plugin-babel'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
 import { join } from 'path'
-import { rollup } from 'rollup'
-import { root } from './root.js'
+import { rollup, type RollupOptions } from 'rollup'
+import { root } from './root.ts'
 
-/**
- * @type {import('rollup').RollupOptions}
- */
-const options = {
+const options: RollupOptions = {
   input: join(root, 'packages/auth-process/src/authProcessMain.ts'),
   preserveEntrySignatures: 'strict',
   treeshake: {

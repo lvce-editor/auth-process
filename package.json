@@ -13,9 +13,9 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "node packages/build/src/build.js",
+    "build": "node packages/build/src/build.ts",
     "build:watch": "./node_modules/.bin/esbuild --format=esm --platform=node --bundle --external:electron --external:trash --external:ws --watch packages/auth-process/src/authProcessMain.ts --outfile=packages/auth-process/dist/index.js",
-    "dev": "node packages/build/src/dev.js",
+    "dev": "node packages/build/src/dev.ts",
     "format": "prettier --write .",
     "lint": "eslint . && knip --no-config-hints",
     "test": "npm test --workspaces --if-present",
