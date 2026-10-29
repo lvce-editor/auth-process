@@ -1,26 +1,45 @@
 import type { Server } from 'node:http'
 import { FailedToDetermineOAuthServerPortError } from '../FailedToDetermineOAuthServerPortError/FailedToDetermineOAuthServerPortError.ts'
 
-export const listen = (server: Server): Promise<number> => {
-  const { promise, reject, resolve } = Promise.withResolvers<number>()
+export const listen = async (server: Server): Promise<number> => {
+  let listenError: Error | undefined
+  let port: number | undefined
+  const { promise, resolve } = Promise.withResolvers<boolean>()
 
   const onError = (error: Error): void => {
     server.off('listening', onListening)
-    reject(error)
+    listenError = error
+    resolve(false)
   }
 
   const onListening = (): void => {
     server.off('error', onError)
     const address = server.address()
     if (!address || typeof address === 'string') {
-      reject(new FailedToDetermineOAuthServerPortError())
+      listenError = new FailedToDetermineOAuthServerPortError()
+      resolve(false)
       return
     }
-    resolve(address.port)
+    const { port: listenPort } = address
+    port = listenPort
+    resolve(true)
   }
 
   server.once('error', onError)
   server.once('listening', onListening)
-  server.listen(0, 'localhost')
-  return promise
+  try {
+    server.listen(0, 'localhost')
+  } catch (error) {
+    server.off('error', onError)
+    server.off('listening', onListening)
+    throw error
+  }
+  const success = await promise
+  if (!success) {
+    throw listenError ?? new FailedToDetermineOAuthServerPortError()
+  }
+  if (port === undefined) {
+    throw new FailedToDetermineOAuthServerPortError()
+  }
+  return port
 }
