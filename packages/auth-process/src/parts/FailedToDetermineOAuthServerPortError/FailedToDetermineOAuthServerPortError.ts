@@ -1,5 +1,7 @@
+import { AUTH_PROCESS_FAILED_TO_DETERMINE_OAUTH_SERVER_PORT } from '../ErrorCodes/ErrorCodes.ts'
+
 export class FailedToDetermineOAuthServerPortError extends Error {
-  code = 'AUTH_PROCESS_FAILED_TO_DETERMINE_OAUTH_SERVER_PORT'
+  code = AUTH_PROCESS_FAILED_TO_DETERMINE_OAUTH_SERVER_PORT
 
   constructor() {
     super('failed to determine oauth server port')
