@@ -47,15 +47,15 @@
     }
   },
   "dependencies": {
-    "@lvce-editor/assert": "^1.5.1",
-    "@lvce-editor/rpc": "^6.4.0",
-    "@lvce-editor/rpc-registry": "^9.22.0"
+    "@lvce-editor/assert": "^1.11.0",
+    "@lvce-editor/rpc": "^6.23.0",
+    "@lvce-editor/rpc-registry": "^9.67.0"
   },
   "devDependencies": {
     "@jest/globals": "^30.2.0",
     "@types/node": "^25.0.7",
     "jest": "^30.2.0",
-    "ts-jest": "^29.4.9"
+    "ts-jest": "^29.4.15"
   },
   "engines": {
     "node": ">=24"

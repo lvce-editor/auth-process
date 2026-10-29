@@ -27,11 +27,11 @@
     "printWidth": 130
   },
   "devDependencies": {
-    "@lvce-editor/eslint-config": "^18.4.0",
-    "esbuild": "^0.28.1",
-    "eslint": "^10.8.1",
-    "knip": "^6.29.0",
-    "prettier": "^3.8.3",
+    "@lvce-editor/eslint-config": "^18.16.0",
+    "esbuild": "^0.28.2",
+    "eslint": "^10.13.0",
+    "knip": "^6.44.0",
+    "prettier": "^3.9.10",
     "typescript": "^6.0.3"
   },
   "engines": {
@@ -39,7 +39,7 @@
   },
   "overrides": {
     "@lvce-editor/test-with-playwright-worker": {
-      "@playwright/test": "1.60.0"
+      "@playwright/test": "1.64.1"
     }
   }
 }
