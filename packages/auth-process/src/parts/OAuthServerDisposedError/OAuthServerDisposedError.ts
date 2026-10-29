@@ -1,5 +1,7 @@
+import { AUTH_PROCESS_OAUTH_SERVER_DISPOSED } from '../ErrorCodes/ErrorCodes.ts'
+
 export class OAuthServerDisposedError extends Error {
-  code = 'AUTH_PROCESS_OAUTH_SERVER_DISPOSED'
+  code = AUTH_PROCESS_OAUTH_SERVER_DISPOSED
 
   constructor() {
     super('oauth server disposed')
