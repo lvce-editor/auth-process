@@ -1,6 +1,7 @@
 import { expect, jest, test } from '@jest/globals'
+import { EventEmitter } from 'node:events'
 
-const rpc = { name: 'rpc' }
+const rpc = { ipc: {}, name: 'rpc' }
 const create = jest.fn(async (_options?: unknown) => rpc)
 const setRpc = jest.fn()
 const setRegistryRpc = jest.fn()
@@ -20,12 +21,13 @@ const { handleElectronMessagePort } = await import('../src/parts/HandleElectronM
 const { initializeParentProcessRpc } = await import('../src/parts/InitializeParentProcessRpc/InitializeParentProcessRpc.ts')
 
 test('message port RPC is created and registered only for a truthy id', async () => {
-  await handleElectronMessagePort({}, 4)
-  expect(create).toHaveBeenCalledWith({ commandMap: {}, messagePort: {}, requiresSocket: false })
+  const port = new EventEmitter()
+  await handleElectronMessagePort(port, 4)
+  expect(create).toHaveBeenCalledWith({ commandMap: {}, messagePort: port, requiresSocket: false })
   expect(setRegistryRpc).toHaveBeenCalledWith(4, rpc)
 
   setRegistryRpc.mockClear()
-  await handleElectronMessagePort({}, 0)
+  await handleElectronMessagePort(new EventEmitter(), 0)
   expect(setRegistryRpc).not.toHaveBeenCalled()
 })
 
