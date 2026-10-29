@@ -17,10 +17,6 @@
       "entry": ["src/**/*.ts"],
       "project": ["src/**/*.ts"]
     },
-    "packages/memory": {
-      "entry": ["src/measureMemory.ts"],
-      "project": ["src/**/*.ts"]
-    },
     "packages/server": {
       "entry": ["src/postinstall.js"],
       "project": ["src/**/*.js"],
